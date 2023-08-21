@@ -1,0 +1,23 @@
+# Исключите базы данных SQLite (если вы их используете)
+*.sqlite3
+*.sqlite3-journal
+
+# Исключите файлы IDE (например, для PyCharm)
+.idea/
+.vscode/
+
+# Исключите папку с статикой, которая собирается командой collectstatic
+static/
+
+# Исключите папку с медиафайлами
+media/
+
+settings.py
+
+# Исключите файлы виртуального окружения
+venv/
+*.log
+*.pot
+*.egg-info/
+db.sqlite3
+db.sqlite3-journal
