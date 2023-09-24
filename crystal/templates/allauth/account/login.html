@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load account socialaccount %}
+
+{% block content %}
+<div class="modal modal-sheet position-static d-block" tabindex="-1" role="dialog" id="modalSignin">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content rounded-4 login-form-container">
+      <div class="modal-header p-5 pb-3 border-bottom-0 d-block">
+        <h1 class="fw-bold mb-0 fs-2 w-100 text-center">Войти</h1>
+        <h3 class="fw-bold mb-0 w-100 text-center"><a href="{% url 'account_signup' %}">или зарегистрироваться</a></h3>
+      </div>
+
+      <div class="modal-body p-5 pt-0">
+          {% if form.errors %}
+          <p class="login-form-description secondary-text mb-4">
+            Указанные почта и пароль не соответствуют друг другу. Попробуйте еще раз.
+          </p>
+          {% endif %}
+        <form method="post" action="{% url 'account_login' %}">
+          {% csrf_token %}
+          <div class="form-floating mb-3">
+            <input class="form-control" id="floatingUsername" name="login" placeholder="name@example.com">
+            <label for="floatingUsername">Ваша почта</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="password">
+            <label for="floatingPassword">Ваш пароль</label>
+          </div>
+          <input type="hidden" name="remember" value="1">
+          <button class="w-100 mb-3 btn main-button crystal-button" type="submit" value="login">
+            Войти
+          </button>
+        </form>
+        <p class="login-form-footer secondary-text mt-2 mb-1">
+          Нажимая на кнопку “Войти”, вы соглашаетесь с политикой конфиденциальности
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

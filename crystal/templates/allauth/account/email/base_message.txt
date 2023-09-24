@@ -1,0 +1,4 @@
+{% autoescape off %}Приветствуем вас на сайте {{ current_site.name }}!
+
+{% block content %}{% endblock content %}
+{% endautoescape %}

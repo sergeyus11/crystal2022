@@ -1,13 +1,18 @@
-<!-- Расширяем базовый шаблон -->
 {% extends 'base.html' %}
 
-<body class="background-image">
-
-</body>
-
 {% block content %}
-<h3> {{title}} </h3>
-
-hjflkjsahdflkjsfh
-
+<div class="modal modal-sheet position-static d-block">
+  <div class="modal-dialog">
+    <div class="modal-content rounded-4 login-form-container">
+      <div class="modal-header p-5 pb-3 border-bottom-0">
+        <h1 class="fw-bold mb-0 fs-2 w-100 text-center">Публичная страница</h1>
+      </div>
+      <div class="modal-body p-5 pt-0">
+          <p class="login-form-description secondary-text mb-4">
+            Страница доступна без логина.
+          </p>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load account %}
+
+{% block content %}
+<div class="modal modal-sheet position-static d-block" tabindex="-1" role="dialog" id="modalSignin">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content rounded-4 login-form-container">
+      <div class="modal-header p-5 pb-3 border-bottom-0 d-block">
+        <h1 class="fw-bold mb-0 fs-2 w-100 text-center">Связанный адрес почты занят</h1>
+      </div>
+
+      <div class="modal-body p-5 pt-0">
+        <p class="login-form-description secondary-text mb-4">
+          Уже есть пользователь, зарегистрированный на указанную в аккаунте почту.
+          Используйте другой аккаунт социальной сети или войти по почте.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -197,3 +197,29 @@ input.form-control {
 	bottom: 0;
 	padding: 0 var(--pd-3);
 }
+
+.code-input-wrapper {
+	width: 100%;
+	display: flex;
+	padding-bottom: var(--pd-3);
+}
+
+.code-input {
+	text-align: center;
+	border: none;
+	border-bottom: 1px solid var(--color-dark-gray);
+	width: 1em;
+	flex: 1 0 1em;
+	font-size: 30px;
+	background: none;
+	color: var(--color-dark-gray);
+}
+
+.code-input:focus-visible {
+	border: 1px solid var(--color-dark-gray);
+	outline: none;
+}
+
+.code-input:not(:last-child) {
+	margin-right: var(--pd-3);
+}

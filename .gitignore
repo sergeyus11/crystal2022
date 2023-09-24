@@ -20,3 +20,6 @@ venv/
 *.egg-info/
 db.sqlite3
 db.sqlite3-journal
+
+*.pyc
+__pycache__

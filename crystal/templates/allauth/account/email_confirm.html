@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load account %}
+
+{% block content %}
+<div class="modal modal-sheet position-static d-block" tabindex="-1" role="dialog" id="modalSignin">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content rounded-4 login-form-container">
+      <div class="modal-header p-5 pb-3 border-bottom-0 d-block">
+        <h1 class="fw-bold mb-0 fs-2 w-100 text-center">Подтвердите адрес</h1>
+      </div>
+
+      <div class="modal-body p-5 pt-0">
+        {% if confirmation %}
+          {% if can_confirm %}
+            <p class="login-form-description secondary-text mb-4">
+              Нажмите кнопку, чтобы подтвердить, что <a href="mailto:{{ email }}">{{ email }}</a> принадлежит вам.
+            </p>
+            <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+              {% csrf_token %}
+              <button class="w-100 mb-3 btn main-button crystal-button" type="submit">
+                Подтвердить
+              </button>
+            </form>
+          {% else %}
+            <p class="login-form-description secondary-text mb-4">
+              Почта уже зарегистрирована. <a href="{% url 'account_login' %}">Войдите с вашим паролем.</a>
+            </p>
+          {% endif %}
+        {% else %}
+          <p class="login-form-description secondary-text mb-4">
+            Время подтверждения почты истекло. <a href="{% url 'account_email' %}">Запросите новое письмо подтверждения.</a>
+          </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

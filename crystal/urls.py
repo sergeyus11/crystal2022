@@ -26,5 +26,6 @@ from crystal.apps import main
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('main/', include('main.urls')) # переадресация в приложение main всех запросов
+    path('accounts/', include('allauth.urls')),
+    path('', include('main.urls')) # переадресация в приложение main всех запросов
 ]

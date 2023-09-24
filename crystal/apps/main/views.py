@@ -1,38 +1,62 @@
 from django.shortcuts import get_object_or_404, render, redirect, HttpResponse
-from .models import Category, Product, Promotion
 from django.urls import reverse
 from django.shortcuts import render
+from django.views.generic import TemplateView
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from .models import Category, Product, Promotion
 from .forms import ProductSearchForm
 
 
-# Create your views here.
-
-
-menu =[{'title': "Каталог", 'url_name': 'catalog_url'},
-       {'title': "О компании", 'url_name': 'about_main'},
-       {'title': "Оптовикам", 'url_name': 'wholesaler'},
-       {'title': "Розница", 'url_name': 'retail'},
-       {'title': "Качество", 'url_name': 'quality'},
-       {'title': "Контакты", 'url_name': 'contacts'},
-       {'title': "ВкусВилл", 'url_name': 'vkusvil'}
+menu = [
+    {'title': "Каталог", 'url_name': 'catalog_url', 'active': True},
+    {'title': "О компании", 'url_name': 'about_main'},
+    {'title': "Оптовикам", 'url_name': 'wholesaler'},
+    {'title': "Розница", 'url_name': 'retail'},
+    {'title': "Качество", 'url_name': 'quality'},
+    {'title': "Контакты", 'url_name': 'contacts'},
+    {'title': "ВкусВилл", 'url_name': 'vkusvil'},
 ]
-products = Product.objects.all()
+
 dictionary = {
     "menu": menu,
-    "products": products,
-    "title": 'Главная страница'
-    }
+    "products": Product.objects.all(), # это необходимо перенести в функцию
+    "title": 'Главная страница',
+}
 
-def index(request):
- 
-    return render(request, 'index.html', context = dictionary)
+
+class BaseView(TemplateView):
+    def get_context_data(self, **kwargs):
+        context = kwargs
+        context.update(dictionary)
+        return super().get_context_data(**context)
+
+
+class LoginRequiredView(LoginRequiredMixin, BaseView):
+    # login_url = reverse('login_options')
+    login_url = '/accounts/login_options/'
+
+
+class IndexView(BaseView):
+    template_name = 'index.html'
+
+
+class LoginOptionsView(BaseView):
+    template_name = 'login_options.html'
+
+
+class EmailConflictView(BaseView):
+    template_name = 'account_email_conflict.html'
+
+
+class AccountView(LoginRequiredView):
+    template_name = 'account.html'
 
 
 def catalog(request):
     # products = Product.objects.all() 
     return render(request, 'catalog.html', context = dictionary)
-
-
 
 
 def catalog(request):
