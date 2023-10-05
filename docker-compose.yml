@@ -1,0 +1,76 @@
+version: "3"
+
+services:
+    server:
+        build: ./deploy/server/
+        restart: always
+        command: uwsgi
+        volumes:
+          - ${PROJECT_PATH}:/opt/crystal
+          - ${PROJECT_PATH}/app:/opt/crystal/app
+        environment:
+          - PROJECT_PATH
+          - POSTGRES_DB
+          - POSTGRES_USER
+          - POSTGRES_PASSWORD
+          - SECRET_KEY
+          - EMAIL_HOST
+          - EMAIL_HOST_USER
+          - EMAIL_HOST_PASSWORD
+          - EMAIL_PORT
+        links:
+          - postgres
+        networks:
+          - backend-net
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "100m"
+                max-file: "5"
+
+    nginx:
+        build: ./deploy/nginx
+        restart: always
+        hostname: nginx
+        ports:
+          - 80:80
+        links:
+          - server
+        volumes:
+          - ${PROJECT_PATH}/static:/opt/crystal/static:ro
+          - /var/log/nginx:/var/log/nginx
+          - /etc/timezone:/etc/timezone:ro
+          - /etc/localtime:/etc/localtime:ro
+        networks:
+          - default
+          - backend-net
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "100m"
+                max-file: "5"
+
+    postgres:
+        build: ./deploy/postgres
+        restart: always
+        hostname: postgres
+        volumes:
+          - dbdata3:/var/lib/postgresql/data
+        environment:
+          - POSTGRES_DB
+          - POSTGRES_USER
+          - POSTGRES_PASSWORD
+        networks:
+          - backend-net
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "100m"
+                max-file: "5"
+
+volumes:
+    dbdata3:
+
+networks:
+  backend-net:
+    driver: bridge
